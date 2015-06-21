@@ -38,7 +38,8 @@ gulp.task('rjs', [ 'babel' ], function (done) {
       underscore: 'empty:',
       meld: npm + 'meld/meld',
       sistyl: npm + 'sistyl/lib/sistyl',
-      'plug-modules': npm + 'plug-modules/plug-modules'
+      'plug-modules': npm + 'plug-modules/plug-modules',
+      'rjs-subcontext': npm + 'rjs-subcontext/index'
     },
     rawText: {
       'extplug/package': 'define(' + packgString + ')'

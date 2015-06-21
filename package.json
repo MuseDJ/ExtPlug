@@ -5,6 +5,7 @@
   "dependencies": {
     "meld": "1.x",
     "plug-modules": "^4.0.0",
+    "rjs-subcontext": "^0.1.1",
     "sistyl": "^0.4.2"
   },
   "devDependencies": {
