@@ -72,19 +72,20 @@ function getApplicationView() {
  *
  * @constructor
  */
-const ExtPlug = Plugin.extend({
-  name: 'ExtPlug',
+export default class ExtPlug extends Plugin {
+  name = 'ExtPlug';
 
-  settings: {
+  settings = {
     corsProxy: {
       type: 'boolean',
       default: true,
       label: 'Use CORS proxy',
     },
-  },
+  };
 
-  init() {
-    this._super('extplug', this);
+  constructor() {
+    super('extplug');
+    this.ext = this;
 
     this.corePlugins = [
       new CommandsPlugin('extplug:chat-commands', this),
@@ -107,7 +108,7 @@ const ExtPlug = Plugin.extend({
         return this.plugins;
       },
     });
-  },
+  }
 
   /**
    * Register an ExtPlug plugin by require.js module name.
@@ -136,7 +137,7 @@ const ExtPlug = Plugin.extend({
       }
     });
     return this;
-  },
+  }
 
   /**
    * Disables and removes an ExtPlug plugin.
@@ -147,12 +148,12 @@ const ExtPlug = Plugin.extend({
       plugin.disable();
       this.plugins.remove(plugin);
     }
-  },
+  }
 
   getPlugin(id) {
     const meta = this.plugins.get(id);
     return meta ? meta.get('instance') : null;
-  },
+  }
 
   /**
    * Installs a plugin. This is basically registerPlugin(), but it also
@@ -170,7 +171,7 @@ const ExtPlug = Plugin.extend({
       localStorage.setItem(LS_NAME, JSON.stringify(json));
       cb(null);
     });
-  },
+  }
 
   /**
    * Disables and removes a plugin forever.
@@ -185,7 +186,7 @@ const ExtPlug = Plugin.extend({
         localStorage.setItem(LS_NAME, JSON.stringify(json));
       }
     }
-  },
+  }
 
   /**
    * Loads installed plugins.
@@ -216,14 +217,14 @@ const ExtPlug = Plugin.extend({
         });
       });
     }
-  },
+  }
 
   /**
    * Checks if ExtPlug has been initialised before.
    */
   isFirstRun() {
     return localStorage.getItem(LS_NAME) == null;
-  },
+  }
   /**
    * Things that should only happen the first time ExtPlug
    * is initialised.
@@ -244,7 +245,7 @@ const ExtPlug = Plugin.extend({
       ].map(path => `https://extplug.github.io/${path}`),
       plugins: {},
     }));
-  },
+  }
 
   /**
    * Initializes ExtPlug.
@@ -301,7 +302,7 @@ const ExtPlug = Plugin.extend({
     }
 
     return this;
-  },
+  }
 
   /**
    * Deinitializes and cleans up ExtPlug.
@@ -324,8 +325,8 @@ const ExtPlug = Plugin.extend({
     // remove room settings handling
     this.roomSettings.dispose();
     this.trigger('deinit');
-    this._super();
-  },
+    super.disable();
+  }
 
   /**
    * Persists plugin settings to localStorage.
@@ -346,7 +347,7 @@ const ExtPlug = Plugin.extend({
     };
 
     localStorage.setItem(LS_NAME, JSON.stringify(json));
-  },
+  }
 
   /**
    * Retrieves plugin settings from localStorage.
@@ -357,14 +358,12 @@ const ExtPlug = Plugin.extend({
       return settings[id];
     }
     return { enabled: false, settings: {} };
-  },
+  }
 
   /**
    * Upgrades old ExtPlug version settings.
    */
   upgrade() {
     // Empty
-  },
-});
-
-export default ExtPlug;
+  }
+}

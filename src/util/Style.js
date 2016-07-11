@@ -4,9 +4,8 @@ import { Sistyl } from 'sistyl';
 import Class from 'plug/core/Class';
 import popoutView from 'plug/views/rooms/popout/PopoutView';
 
-// hack to get plug.dj-like Class inheritance on a not-plug.dj-like Class
-const Style = Class.extend({
-  init(defaults) {
+export default class Style {
+  constructor(defaults) {
     this.sistyl = new Sistyl(defaults);
     this.timeout = null;
 
@@ -21,7 +20,7 @@ const Style = Class.extend({
       this.el.clone().appendTo(popoutView.$document.find('head'));
     }
     this.refresh();
-  },
+  }
 
   $() {
     let el = this.el;
@@ -29,7 +28,7 @@ const Style = Class.extend({
       el = el.add(popoutView.$document.find(`#${this.id}`));
     }
     return el;
-  },
+  }
 
   set(sel, props) {
     this.sistyl.set(sel, props);
@@ -38,29 +37,26 @@ const Style = Class.extend({
     clearTimeout(this.timeout);
     this.timeout = setTimeout(this.refresh, 1);
     return this;
-  },
+  }
 
   unset(sel, prop) {
     this.sistyl.unset(sel, prop);
     return this;
-  },
+  }
 
   rulesets() {
     return this.sistyl.rulesets();
-  },
+  }
 
   refresh() {
     this.$().text(this.toString());
-  },
+  }
 
   remove() {
     this.$().remove();
-  },
+  }
 
   toString() {
     return this.sistyl.toString();
-  },
-
-});
-
-export default Style;
+  }
+}

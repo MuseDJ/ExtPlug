@@ -1,5 +1,7 @@
 import plugModules from 'plug-modules';
 
+Function.prototype.extend = Backbone.Model.extend;
+
 function waitFor(cond, fn) {
   const i = setInterval(() => {
     if (cond()) {
